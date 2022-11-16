@@ -1,0 +1,16 @@
+chop([],_,[]).
+chop(X,0,X).
+chop([_|T],N,Out):-
+    N1 is N-1,
+    chop(T,N1,Out).
+
+sublist([],0,_,[]). %avoid infinite loop where the length requested is bigger
+					%than the length of the given list.
+sublist(_,_,0,[]). %base case, sublist of length 0 -> output is []
+sublist([H|T],0,N,Out):-
+    N1 is N-1,
+    sublist(T,0,N1,Out1),
+    append([H],Out1,Out).
+sublist(X,Beg,Length, Out):-
+    chop(X,Beg,List),
+    sublist(List,0,Length, Out).

@@ -1,0 +1,60 @@
+(defun sub-list3 (theList from &optional (to nil)) 
+    ;takes a list and two integer (from and to) as input and return a sub-list starting at 'from' to 'to'.
+    ;the argument 'to' is optional, if ommited, the length of the list is assumed. 
+    ;function returns nil if list 'theList' is empty
+    ;if arguments 'from' or 'to' is out of bounds, default value of 1 and the length of the list 
+    ; are assumed, respectively.
+   (setf tail theList) ; creates a copy of 'theList'
+   (setf swap '2) ;used as and indicator to create an inversed list 
+    ; if 'to' was omitted, provide a default value
+   (if (not to) (setf to (list-length theList))) 
+    ; replace 'to' if out of bounds (greater than list-length
+   (if (> to (list-length theList)) (setf to (list-length theList))) 
+    ; SPECIAL CASE replace 'to' with 1 if out of bounds (less than 1)
+   (if (< to 1) (setf to 1))
+    ; replace 'from' with 1 if out of bounds (less than 1)
+   (if (< from 1) (setf from 1))
+    ; SPECIAL CASE replace 'from' with list-length if out of bound (greater than list-length)
+   (if (> from (list-length theList)) (setf from (list-length theList))); replace from with 1 if out of bounds
+   (cond ((> from to)  ; if from is bigger than to
+        ; swap to and from
+       (setf x to)
+       (setf to from)
+       (setf from x)
+       (setf swap 1) ;indicates that the swap took place and a reversed list must be made
+    )) ;end cond
+   (progn ;block
+       (setf numOfIteration from) ; how many atoms must be remove at the front = from
+       (loop
+           (when (< numOfIteration 2) (return)) ; from is down to 1, if starts at 3 then 3 - 1 = 2 element are cut from the orignal list
+           (setf tail (cdr tail)) ; cuts one element at each iteration
+           (setf numOfIteration (- numOfIteration 1))
+
+        ) ; end of loop
+       (setf numOfIteration (- to from))
+       (setf temp(list)) ; une fois 
+       (loop
+            (setf temp (append temp (list(car tail)))) ; append car of tail
+            (setf numOfIteration (- numOfIteration 1))
+            (setf tail (cdr tail)) ; cuts one element at each iteration
+            (when (< numOfIteration 0) (return))
+
+        ) ; end of loop
+       (cond ((= swap '1) ;if there was a swap, enter
+              (setf finalList(list(car temp)));creates the finalList with first element of list temp
+              (setf numOfIteration (- to from))
+              (loop 
+                   (setf temp (cdr temp)) ; cuts one element at each iteration
+                   (setf finalList (append (list(car temp)) finalList)) ;appends the first element of temp to final list
+                   (setf numOfIteration (- numOfIteration 1)) ; decreases counter
+                   (when (< numOfIteration 1) (return))
+               ); end loop
+              (setf temp finalList) ; return the reverse list
+        )) ; end of cond block
+       temp ; returns the temp, no need for return keyword if last statement of
+                 ; progn block. 
+    ); end of progn 
+    
+    
+)
+(print(sub-list3 '(1 2 3 4 5 6 7 8 9 a) 11 -1))

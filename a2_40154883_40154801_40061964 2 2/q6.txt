@@ -1,0 +1,13 @@
+(defun depth (list); Function definition
+     
+       (if (atom list) 0 ; returns zero if we are given an atom
+                    (+ 1 (apply #' max (mapcar #' depth list) ; will add 1 each time we find a list
+                                 ))  ; applying the #' -----> (function) to the mapcar of the depth of the list
+
+           ;mapcar function processes successive elements of one or more lists.
+           
+           ;(apply #'+ l) ==  (apply (function +) l)
+
+       )
+)
+(print(depth '((2)(3 (6))(4))))

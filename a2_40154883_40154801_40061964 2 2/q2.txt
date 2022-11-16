@@ -1,0 +1,34 @@
+(defun sub-list2 (theList from &optional (to nil)) ;function declaration
+    ;takes a list and two integer (from and to) as input and return a sub-list starting at from to to.
+    ;the argument to is optional, if ommited, the length of the list is assumed. 
+    ;function returns nil if list is empty
+    ;if arguments 'from' or 'to' is out of bounds, default value of 1 and the length of the list 
+    ; are assumed respectively.
+   (setf tail theList) ;creates a copy of 'theList'
+   (if (not to) (setf to (list-length theList))) ; if 'to' was omitted, provide a default value
+   (if (> to (list-length theList)) (setf to (list-length theList))) ; replace 'to' if out of bounds
+   (if (< from '1) (setf from '1)); replace 'from' with 1 if out of bounds
+   (if (> from to) ; checks if 'from' is larger than 'to', terminates the progam if true
+        NIL
+       (progn 
+           (setf numOfIteration from) ; how many atoms must be remove at the front = 'from'
+           ; chops unwanted elements at the beginning of the list
+           (loop
+               (setf numOfIteration (- numOfIteration 1))
+               (when (< numOfIteration 1) (return)) ; from is down to 1, if starts at 3 then 3 - 1 = 2 element are cut from the orignal list
+               (setf tail (cdr tail)) ; cuts one element at each iteration
+            ) ;end of loop
+           (setf numOfIteration (- to from))
+           (setf finalList(list)) ; une fois 
+           (loop ; append the first element of tail to finalList, then chops tail by one and repeat
+                (setf finalList (append finalList (list(car tail)))) ; append car du tail
+                (setf tail (cdr tail)) ; cuts one element at each iteration
+                (setf numOfIteration (- numOfIteration 1))
+                (when (< numOfIteration 0) (return))
+            ); end of loop
+           finalList ; returns the finalList, no need for return keyword if last statement of
+                     ; progn block. 
+        ) ; end of progn block
+    ); end of if block
+); end of sub-list2
+(print(sub-list2 '(1 2 3 4 5 6 7 8 9 a) -3 29))

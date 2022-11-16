@@ -1,0 +1,51 @@
+	
+	
+	////////////   8(1):- Database ///////////////////
+	
+		student_info(keyur,40154883).
+		student_info(nirmal,40154883).
+		student_info(julien,40061964).
+		
+		
+		course(keyur,comp233).
+		course(keyur,comp348).
+		course(keyur,comp335).
+		course(keyur,comp352).
+		
+		course(nirmal,comp233).
+		course(nirmal,comp348).
+		course(nirmal,comp335).
+		course(nirmal,comp352).
+		
+		course(julien,comp228).
+		course(julien,comp348).
+		course(julien,comp335).
+		course(julien,comp352).
+
+
+
+	///////////  8(2):- Query to return the list of the courses taken by the whole team  ///////////////////////
+	
+		findall(K,course(keyur,K),Keyur)
+		
+		findall(K,course(nirmal,K),Nirmal)
+		
+		findall(K,course(julien,K),Julien)
+		
+		
+	///////////  8(3):- Query to return team size ///////////////////////
+	
+		findall(S,student_info(S,_),L), length(L, Lst)
+		
+		
+	///////////  8(4):- Query to return the unique courses takek by the whole team /////////////////////
+		
+		findall(K,course(_,K),L), list_to_set(L, Lst)
+		
+	///////////  8(5):- Use of the sort/2 to sort the result of the previous query /////////////////
+	
+		findall(K,course(_,K),L), sort(L, Lst)
+		
+	///////////  8(6):- Query for the unification of the expression....based on the above result /////////////
+	
+		findall(K,course(_,K),L), sort(L, [A,B|C])

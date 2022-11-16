@@ -1,0 +1,28 @@
+
+//////// 11 :- Lucas Sequence /////////
+
+	lucas_seq(0, [2]).
+	lucas_seq(1, [2, 1]).
+	
+	lucas_seq(N, Lst) :-
+	    N > 1,
+	    
+	    Ele_1 is N - 1, Ele_2 is N - 2,
+	    
+	    lucas_seq(Ele_1, Front_1),
+	    last(Front_1, Last_1),
+	    
+	    lucas_seq(Ele_2, Front_2),
+	    last(Front_2, Last_2),
+	    
+	    Ele_new is Last_1 + Last_2,
+	    
+	    append(Front_1, [Ele_new], Lst). 
+	    
+////////////// Query ///////////////////
+
+		lucas_seq(4,S)
+		
+		lucas_seq(10,S)
+		
+		lucas_seq(0,S)

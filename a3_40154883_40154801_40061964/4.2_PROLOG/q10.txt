@@ -1,0 +1,22 @@
+
+
+	////// 10:- Rules for the asked question //////
+
+		every-other([],[]):-!.
+		every-other([H],[H]):-!.
+		every-other([H,_|T],[H|K]):- every-other(T,K).
+		
+		
+	//////// Tested Queries //////
+	
+		every-other([],L)
+		
+		every-other([1],L)
+		
+		every-other([1,2],L)
+		
+		every-other([1,2,3],L)
+		
+		every-other([1,2,3,4],L)
+		
+		every-other([1,2,3,4,5,6,7,8,9,0],L)

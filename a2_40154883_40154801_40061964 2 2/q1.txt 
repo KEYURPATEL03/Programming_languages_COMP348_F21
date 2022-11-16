@@ -1,0 +1,32 @@
+(defun sub-list (theList from &optional (to nil)) ;function declaration
+    ;takes a list and two integer (from and to) as input and return a sub-list starting at from to to.
+    ;the argument to is optional, if ommited, the length of the list is assumed. 
+    ;function returns nil if either from or to is out of bounds or if list is empty
+   (if (= 0 (list-length theList)) (return-from sub-list nil)) ; checks if list argument is empty, return nil if true.
+   (setf tail theList) ; creates a copy of theList
+   (if (not to) (setf to (list-length theList))) ; give a value to 'to' if 'to' was omitted
+   ; return nil if 'from' < 0, 'to' > list length or 'from' > 'to', otherwise valid function call, proceed with function
+   (if (or (or (> to (list-length theList))(< from 1))(> from to))
+        NIL ;invalid arguments 'from' or 'to'
+       (progn ;block
+           (setf numOfIteration from) ; how many atoms must be remove at the front = 'from' -1
+           (loop
+               (setf numOfIteration (- numOfIteration 1)) ; decrement counter
+               (when (< numOfIteration 1) (return)) ; control the loop, exit condition
+               (setf tail (cdr tail)) ; cuts one element at each iteration
+            ); end of loop
+           (setf numOfIteration (- to from)) ; must iterate for the difference between 'to' and 'from'
+           (setf finalList(list)) ; une fois 
+           (loop
+                (setf finalList (append finalList (list(car tail)))) ; append car du tail
+                (setf numOfIteration (- numOfIteration 1))
+                (setf tail (cdr tail)) ; cuts one element at each iteration
+                (when (< numOfIteration 0) (return))
+            ); end of loop
+           finalList ; returns the finalList, no need for return keyword if last statement of
+                     ; progn block. 
+        ) ;end of progn block
+    );end of if block
+)
+(setf list1 '(1 2 3 4 5 6 7 8 9 a b c d e f ))
+(print(sub-list list1 10 15 ))

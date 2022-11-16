@@ -1,0 +1,6 @@
+Assignment 1 
+
+Q2
+Despite the Fact that all shapes  are either Rectangle or Circle, you cannot pass an a shape[] array as printable[] to the print method. why?
+
+Because being a shape does not guarantee the implementation of the interface printable.

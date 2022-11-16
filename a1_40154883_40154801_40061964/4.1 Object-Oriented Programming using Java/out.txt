@@ -1,0 +1,7 @@
+Circle, 5
+Rectangle, 2, 4
+Circle, 6
+Rectangle, 7, 5
+Circle, 3
+Circle, 8
+Rectangle, 5, 8

@@ -1,0 +1,42 @@
+(defun flatten-nums-nodup (OG) ;function declaration
+    ; takes a list as input that can contains atoms and lists
+    ; flattens the elements of the OG list to return a list containing only atoms, 
+    ; with no duplicates in the list.
+    (setf iteration-outer-loop (list-length OG)) ; num of iteration necessary = length of OG list
+    (setf tail OG) ; creates a copy of OG list
+    (setf final (list)); creates an empty list 
+    (setf flag -1) ; reset the indicator for recursive call
+    (loop
+        (when (< iteration-outer-loop 1) (return)) ; control the loop
+        (setf iteration-outer-loop (- iteration-outer-loop 1)) ; decrement iteration
+         ;temp will contain a list with only the first element of tail 
+        (if (atom (car tail))  ; is the first element of tail a list or an atom
+            (setf temp (list (car tail))) ; if (car OG) returns an atom, make a list out of it
+            (setf temp (car tail))  ; else return the list
+         ) ;end if 
+        (setf iteration-inner-loop (list-length temp)) ; iterates through the element of temp (may contains many atoms)
+        (loop 
+            (when (< iteration-inner-loop 1) (return)) ;control the loop
+            (setf iteration-inner-loop (- iteration-inner-loop 1)) ; decrement iteration
+            (if (not (atom (car temp))) (setf flag 1)) ; if the element is a list must recurse to flatten it
+            (if (or (numberp (car temp))(listp (car temp)))(setf validElement (car temp))) ; doesnt include non-number or list
+            (setf final (append final (list validElement))) ; appends the first element of temp to final
+            (setf temp (cdr temp)) ; chops one element off of temp
+        ); end of inner loop
+        (setf tail (cdr tail)) ; chops one element off of tail
+
+     ); end loop
+    (if (= flag 1) (flatten-nums-nodup final) ; recursive call to get rid of all inner lists
+     );end if
+    
+    (setf final (remove-duplicates final :test 'equal :from-end t)) ;removes duplicates
+    (return-from flatten-nums-nodup final); return statement
+)
+
+(setf list1 '(1 2 3))
+(setf list2 '(((1) 2) 3)) ; list containss 1 list and 1 atom, which contains 1 list of one atom and 1 atom
+(setf list3 '(1 (2 (3)))) 
+(setf list4 '(1 2 3 (()()) )) ; contains list of empty lists
+(setf list5 '(1 2 (3 1) (a 2.5) (2 4.5) ((1 2)))) ; example from assignment
+(setf list6 '(1 a b 2 (b b) (a ( e f g) ( k) (( l))) 0))
+(print(flatten-nums-nodup list5))

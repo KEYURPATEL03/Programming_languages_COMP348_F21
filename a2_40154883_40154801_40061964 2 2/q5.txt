@@ -1,0 +1,43 @@
+;(a) Tribonacci iterative 
+
+(defun tribonacci-i(n)
+     (setf a 0 b 0 c 1)
+    (
+     cond
+        ((< n 1) (write nil))
+        ((= n 1)  (write a)) 
+        ((= n 2)  (write a)(write b)) 
+        ((= n 3)  (write a)(write b)(write c))
+        (t 
+             (write a)(write b)(write c)
+             (do(( i 4 (+ i 1))) ((= i (+ n 1)))
+                (setf d (+ a b c))
+                    (write d)
+                (setf a b b c c d))
+
+        )
+         
+     ) 
+)
+;(tribonacci-i 8)
+
+
+
+
+
+;(b) Tribonacci Recursive 
+(defun tribonacci (n a b c);function declaration
+    (if (= n 0) '()
+        (cons (+ a b c) (tribonacci (- n 1) b c (+ a b c))); recursive call of the tribonacci sequence using tail recursion.
+    )
+)
+(defun tribonacci-seq(n); function declaration of the trib_seq to print the tribonacci sequence 
+    (cond 
+        ((< n 1) nil) ; 
+        ((= n 1)  0) 
+        ((= n 2) (list 0 0))
+        ((= n 3) (list 0 0 1))                           
+         (t (append '(0 0 1) (tribonacci (- n 3) 0 0 1))); appending the base cases with the n tribonacci numbers to form a list of them.
+     ) 
+)
+;(print(tribonacci-seq 0))

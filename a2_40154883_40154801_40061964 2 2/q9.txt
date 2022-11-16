@@ -1,0 +1,27 @@
+(defun inorder(tree); Function definition for the Inorder Traversal LEFT , ROOT , RIGHT
+    (if 
+        (null tree) nil  ;
+            (append 
+                 (inorder (car (cdr tree)))
+                 (list (car tree))
+                 (inorder (car (cdr (cdr tree)))) ; Recursive call
+            ) 
+    )
+)
+
+
+(defun preorder(tree) ; Function definition for the Preorder Traversal ROOT, LEFT, RIGHT
+    (if 
+         (null tree) nil
+        
+           (cons (car tree)
+               (append (preorder (car (cdr tree)))
+                     (preorder (car(cdr(cdr tree)))) ; Recursive call
+               )
+           )
+    )
+)
+
+(print(inorder '(+ (- (1 () ()) (* (4 () ())(7 () ()))) (/ (7 () ()) (6 () ())))))
+
+(print(preorder '(+ (- (1 () ()) (* (4 () ())(7 () ()))) (/ (7 () ()) (6 () ())))))

@@ -1,0 +1,33 @@
+;For Checking that the given tree is a Binary search tree.
+; we can check if the Inorder traversal of the tree is in non-decreasing order .
+
+;First Function: converts the tree in Inorder traversal
+(defun inorder(tree); function definition fort he inorder traversal
+    (if 
+        (null tree) nil
+            (append 
+                 (inorder (car (cdr tree)))
+                 (list (car tree))
+                 (inorder (car (cdr (cdr tree))))
+            ) 
+    )
+)
+
+(write(inorder '(8 (3 (1 () ()) (6 (4 () ())(7 () ()))) (10 () (14 (13 () ()) ()))))) ;given example from assignment.
+
+(setq lst-1 (inorder '(8 (3 (1 () ()) (6 (4 () ())(7 () ()))) (10 () (14 (13 () ()) ()))))) ; storing the obtained traversal into a list.
+
+
+;Second Function: Checks that if the obtained traversal of the tree is in Ascending order or not.
+(defun isAscending(lst) ; Function definition 
+    
+    (cond ;conditions 
+        ((null (cdr lst)) t)  
+        ((> (car lst) (cadr lst)) nil)  ; if the recieved list ios not in the ascending order than returns NIL.
+        (t (isAscending (cdr lst))) ; return TRUE if the obtained list is in the ascening order .
+        
+        
+     )  
+)
+
+(print (isAscending lst-1)) ; using stored list to pass into the Ascending function

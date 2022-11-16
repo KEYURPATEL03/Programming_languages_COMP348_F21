@@ -1,0 +1,51 @@
+
+	////////// 12(1):- Representation of the Finite State Machine ///////////////
+	
+		start(q0):-!.
+		start(q3):-!.
+		
+		final(q0):-!.
+		final(q4):-!.
+		final(q5):-!.
+		
+		transition(q0,1,q1):-!.
+		transition(q0,0,q3):-!.
+		transition(q1,0,q5):-!.
+		transition(q1,1,q2):-!.
+		transition(q2,1,q2):-!.
+		transition(q2,0,q2):-!.
+		transition(q3,1,q4):-!.
+		transition(q3,0,q0):-!.
+		transition(q4,1,q2):-!.
+		transition(q4,0,q5):-!.
+		transition(q5,0,q5):-!.
+		transition(q5,1,q2):-!.
+		
+		accept(Xs):-start(Q),path(Q,Xs).
+		
+		path(Q,[X|Xs]):-transition(Q,X,QI),path(QI,Xs).
+		
+		path(Q,[]):- final(Q).
+		
+		
+	//////////// 12(2):- Query to determine whether the sequences are accepted or not ////////////
+	
+		accept([0])
+		
+		accept([1])
+		
+		accept([0,1])
+		
+		accept([1,0])
+		
+	////// 12(3):- When we run the queries we get ...below...written answers respectively ///////
+	
+		false
+		
+		false
+		
+		true
+		
+		true
+		
+	

@@ -1,0 +1,51 @@
+; from the given formula the function NoEl gives us n(i): number of elements in the list 
+(defun NoEl (lst)
+    (if (null lst) 0  ; if list is null then return nil
+        (if (listp lst) ; if lst is a list then 
+            (+ (NoEl (car lst)) (NoEl (cdr lst))); adding the NoEl of the first element and the cdr with is tail of the list 
+            1 ; if not a list ....then it is atom so, return 1
+        )
+    )
+)
+;(print (NoEl'(a (b c) d (e (f g))))) ; 7 elements in this list
+;(print (NoEl '(a (b c) d (e f))))  ;6 elements in this list
+
+;the function CentOGrav-num computes the numerator of the COG function 
+
+(defun CentOGrav-num (lst index CentOGrav)
+    (if (null lst) 0
+        (if (listp (car lst)) 
+             (+ 
+              (* (NoEl (car lst)) (- index CentOGrav)) 
+              (CentOGrav-num (cdr lst) (+ index 1) CentOGrav)
+             )
+             (+ 
+              (- index CentOGrav) 
+              (CentOGrav-num (cdr lst) (+ index 1) CentOGrav)
+             )
+        )
+    )
+)
+
+;(print(CentOGrav-num '(a (b c) d (e (f g))) 0 0 ))
+
+(defun CentOGrav-den (lst)
+    (if (null lst) 0
+        (if (listp (car lst)) 
+            (+ (NoEl (car lst)) (CentOGrav-den (cdr lst)))
+            (+ 1 (CentOGrav-den (cdr lst)))
+        )
+    )
+)
+; the COG function calculates the centre of gravity by utilizing the CentOGrav-num and CentOGrav-den
+(defun COG (lst)   ; taking a list as an input 
+    (/
+        (CentOGrav-num lst 1  (/ (+ (length lst) 1) 2.0)   )
+         (CentOGrav-den lst)
+     )
+)
+(print (COG '(a (b c) d (e (f g)))))
+(print (COG '(a (b c) d (e f))))
+(print (COG '(a (b c) (e f) d)))
+(print (COG '(1 2 3 4 5)))
+(print (COG '(1 2 3 4 5 6)))
